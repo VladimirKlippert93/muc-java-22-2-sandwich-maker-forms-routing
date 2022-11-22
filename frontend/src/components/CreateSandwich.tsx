@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {Sandwich} from "../model/Sandwich";
 
 type CreateSandwichProps = {
@@ -18,6 +18,7 @@ export default function CreateSandwich(props: CreateSandwichProps) {
 
     const [sandwich, setSandwich] = useState(emptySandwichPlaceholder)
 
+
     /*
     * TODO: Aufgabe 3 -> Erstelle eine handleSubmit(event: FormEvent<HTMLFormElement>) Funktion,
     *  die props.addSandwich aufruft und das neue Sandwich-Objekt als Parameter übergibt
@@ -32,10 +33,67 @@ export default function CreateSandwich(props: CreateSandwichProps) {
     /*
     * TODO: Aufgabe 1 -> Erstelle eine <form> mit der man alle Daten eines Burgers angeben kann
     **/
+    function handleOnChange(event: ChangeEvent<HTMLInputElement>){
+        const fieldName = event.target.name
+        const fieldTyp = event.target.type
+
+        setSandwich(prevState => ({
+
+            ...prevState, [fieldName] : fieldTyp ? event.target.value : event.target.checked
+        }))
+    }
+    function handleSubmit(event: FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        alert(sandwich)
+    }
+
+
     return (
         <div>
             {/* TODO: onClick hier entfernen und props.addSandwich in handleSubmit verschieben */}
-            <button onClick={() => props.addSandwich(sandwich)}>Bestellung hinzufügen</button>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Bullete:
+                    <input
+                        type={"string"}
+                        name={"patty"}
+                        value={sandwich.patty}
+                        onChange={handleOnChange}
+                    />
+                </label>
+                <br/>
+                <label>
+                    Anzahl von Bulleten:
+                    <input
+                        type={"number"}
+                        name={"numberOfPatties"}
+                        value={sandwich.numberOfPatties}
+                        onChange={handleOnChange}
+                    />
+                </label>
+                <br/>
+                <label>
+                    Brot gegrillt:
+                    <input
+                        type={"checkbox"}
+                        name={"grilled"}
+                        checked={sandwich.grilled}
+                        onChange={handleOnChange}
+                    />
+                </label>
+                <br/>
+                <label>
+                    Extrawünsche:
+                    <input
+                        type={"string"}
+                        name={"extraWishes"}
+                        value={sandwich.extraWishes}
+                        onChange={handleOnChange}
+                    />
+                </label>
+                <br/>
+                <button onClick={() => props.addSandwich(sandwich)}>Bestellung hinzufügen</button>
+            </form>
         </div>
     )
 
