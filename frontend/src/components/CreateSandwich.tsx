@@ -35,11 +35,12 @@ export default function CreateSandwich(props: CreateSandwichProps) {
     **/
     function handleOnChange(event: ChangeEvent<HTMLInputElement>){
         const fieldName = event.target.name
-        const fieldTyp = event.target.type
+        const fieldType = event.target.type
+        const fieldValue = fieldType !== "checkbox" ? event.target.value: event.target.checked
 
         setSandwich(prevState => ({
+            ...prevState, [fieldName]: fieldValue
 
-            ...prevState, [fieldName] : fieldTyp ? event.target.value : event.target.checked
         }))
     }
     function handleSubmit(event: FormEvent<HTMLFormElement>){
