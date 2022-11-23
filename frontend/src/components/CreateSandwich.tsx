@@ -33,19 +33,20 @@ export default function CreateSandwich(props: CreateSandwichProps) {
     /*
     * TODO: Aufgabe 1 -> Erstelle eine <form> mit der man alle Daten eines Burgers angeben kann
     **/
-    function handleOnChange(event: ChangeEvent<HTMLInputElement>){
+    function handleOnChange(event: ChangeEvent<HTMLInputElement>) {
         const fieldName = event.target.name
         const fieldType = event.target.type
-        const fieldValue = fieldType !== "checkbox" ? event.target.value: event.target.checked
+        const fieldValue = fieldType !== "checkbox" ? event.target.value : event.target.checked
 
         setSandwich(prevState => ({
             ...prevState, [fieldName]: fieldValue
 
         }))
     }
-    function handleSubmit(event: FormEvent<HTMLFormElement>){
+
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        alert(sandwich)
+        props.addSandwich(sandwich)
     }
 
 
@@ -93,7 +94,7 @@ export default function CreateSandwich(props: CreateSandwichProps) {
                     />
                 </label>
                 <br/>
-                <button onClick={() => props.addSandwich(sandwich)}>Bestellung hinzufügen</button>
+                <button>Bestellung hinzufügen</button>
             </form>
         </div>
     )
